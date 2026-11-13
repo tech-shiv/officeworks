@@ -12,6 +12,7 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            categories: string[];
             [key: string]: unknown;
         };
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Catalogue\Contracts\ProductProvider;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -41,6 +42,11 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'categories' => fn () => app(ProductProvider::class)->all()
+                ->pluck('category')
+                ->unique()
+                ->sort()
+                ->values(),
         ];
     }
 }

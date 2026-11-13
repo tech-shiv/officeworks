@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Catalogue\Contracts\ProductProvider;
+use App\Catalogue\FakeStoreProductProvider;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ProductProvider::class, match (config('catalogue.provider')) {
+            'fake_store' => FakeStoreProductProvider::class,
+            default => FakeStoreProductProvider::class,
+        });
     }
 
     /**
